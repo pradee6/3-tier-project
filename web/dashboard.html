@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script defer src="script.js"></script>
+</head>
+<body class="light-mode">
+    <header>
+        <div class="header-container">
+            <button id="home-btn">Home</button>
+            <button id="about-btn">About</button>
+            <button id="feedback-btn">Feedback</button>
+            <button id="show-profile-btn">Show Profile</button>
+            <button id="logout-btn">Logout</button>
+            <button id="dark-mode-toggle">Toggle Dark Mode</button>
+        </div>
+    </header>
+
+    <div id="main-content" class="content">
+        <div id="welcome-message">Welcome to the Dashboard</div>
+        <div class="categories-container" id="categories-container">
+            <div class="category-grid" data-category="travelling">Travelling</div>
+            <div class="category-grid" data-category="streaming">Streaming</div>
+            <div class="category-grid" data-category="shopping">Shopping</div>
+            <div class="category-grid" data-category="adult">Adult</div>
+            <div class="category-grid" data-category="insurance">Insurance</div>
+            <div class="category-grid" data-category="pharmacy">Pharmacy</div>
+            <div class="category-grid" data-category="food">Food Delivery</div>
+            <div class="category-grid" data-category="social">Social Apps</div>
+        </div>
+
+        <div id="websites-list" class="websites-list hidden"></div>
+        <div id="about-section" class="hidden">This website is designed to be a dashboard for various categories of websites.</div>
+        <div id="feedback-section" class="hidden">
+            <h2>Feedback</h2>
+            <form id="feedback-form">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Feedback" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div id="profile-section" class="hidden">
+                <h2>Your Profile</h2>
+                <p id="profile-name">Name: <span id="registered-name"></span></p>
+                <p id="profile-dob">Date of Birth: <span id="registered-dob"></span></p>
+                <p id="profile-phone">Phone: <span id="registered-phone"></span></p>
+            </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Center the video */
+#backgroundVideo {
+    position: absolute; /* Position the video absolutely */
+    top: 50%;  /* Move down to the middle of the screen */
+    left: 50%; /* Move to the middle of the screen */
+    min-width: 80%; /* Ensure it fills the width */
+    min-height: 80%; /* Ensure it fills the height */
+    z-index: -1; /* Keep it behind the card */
+    object-fit: cover; /* Cover the entire background while maintaining aspect ratio */
+    transform: translate(-50%, -50%) scale(0.9); /* Center the video */
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: rgb(246, 247, 246); /* Light card background */
+    border-radius: 15px; /* More rounded corners */
+    padding: 40px 30px; /* More padding */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    animation: slide-in 1s forwards; /* Animation for card */
+}
+
+.input-group {
+    margin-bottom: 20px; /* Space between input fields */
+}
+
+input[type="text"], input[type="email"], input[type="password"], select {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside inputs */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border for inputs */
+}
+
+button {
+    background-color: #4CAF50; /* Pink button */
+    color: white; /* White text */
+    padding: 10px; /* Button padding */
+    border: none; /* No border */
+    border-radius: 10px; /* Rounded button corners */
+}
+
+button:hover {
+    background-color: #388E3C; /* Darker pink on hover */
+}
+
+.animated-message {
+    margin-top: 20px;
+    animation: fade-in 0.5s ease-in-out; /* Fade-in animation */
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="background.mp4" type="video/mp4"> <!-- Replace with your video path -->
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="container">
+        <div class="card">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            <p>Forgot your password? <a href="reset-password.html">Reset Password</a></p>
+            <div id="loginMessage" class="animated-message"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
