@@ -9,7 +9,7 @@ WORKDIR /app
 COPY app/requirements.txt /app/
 
 # Install dependencies
-RUN pip install -r app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 # Now, copy the rest of the application files into the container
 COPY app/ /app/
