@@ -6,13 +6,13 @@ WORKDIR /app
 
 # Copy only the requirements.txt first to leverage Docker cache
 # This improves build time by caching dependencies
-COPY requirements.txt /app/
+COPY app/requirements.txt /app/
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip install -r app/requirements.txt
 
 # Now, copy the rest of the application files into the container
-COPY . /app/
+COPY app/ /app/
 
 # Expose port 5000 for the Flask app
 EXPOSE 5000
