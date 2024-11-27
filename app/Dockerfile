@@ -4,11 +4,15 @@ FROM python:3.9-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Flask app files into the container
-COPY . /app
+# Copy only the requirements.txt first to leverage Docker cache
+# This improves build time by caching dependencies
+COPY requirements.txt /app/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Now, copy the rest of the application files into the container
+COPY . /app/
 
 # Expose port 5000 for the Flask app
 EXPOSE 5000
