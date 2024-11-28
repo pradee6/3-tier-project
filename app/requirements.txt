@@ -1,5 +1,5 @@
 Flask==2.2.2
 Flask-SQLAlchemy==2.5.1
 Flask-Mail==0.9.1
-Flask-CORS==2.1.1
+Flask-CORS==3.0.0  # Or try 2.1.0 if 3.0.0 doesn't work
 mysql-connector-python==8.0.29
