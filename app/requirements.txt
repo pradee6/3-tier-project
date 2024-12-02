@@ -1,8 +1,6 @@
-Flask==2.2.2
-Flask-SQLAlchemy==2.5.1
+Flask==2.3.2
+Flask-SQLAlchemy==3.0.2
 Flask-Mail==0.9.1
-Flask-CORS==3.0.0  # Or try 2.1.0 if 3.0.0 doesn't work
-mysql-connector-python==8.0.29
-werkzeug==2.2.2  # Ensure compatibility with Flask 2.x
-SQLAlchemy==1.4.41  # Ensure compatibility with Flask-SQLAlchemy
-
+Flask-CORS==3.1.1
+Flask-Session==0.4.0
+mysql-connector-python==8.0.33
