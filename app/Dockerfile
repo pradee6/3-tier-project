@@ -5,7 +5,6 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy only the requirements.txt first to leverage Docker cache
-# This improves build time by caching dependencies
 COPY app/requirements.txt /app/
 
 # Install dependencies
@@ -21,5 +20,5 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
-# Start the Flask application
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Run the Flask application using python directly
+CMD ["python", "app.py"]
