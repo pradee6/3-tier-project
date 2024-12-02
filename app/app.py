@@ -17,21 +17,13 @@ app = Flask(__name__)
 # Configure CORS to support credentials
 CORS(app) # Update this to match your fronten
 
-# Configure session cookie settings
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin requests
-app.config['SESSION_COOKIE_SECURE'] = True  # Use True if your app is served over HTTPS
-app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
-app.config['SESSION_PERMANENT'] = False  # Set to False to allow sessions to be temporary
-app.config['SESSION_COOKIE_DOMAIN'] = ''  # Web server IP
-app.config['SESSION_COOKIE_NAME'] = 'my_flask_session'
-
 # Other configurations and route definitions here
 app.secret_key = '441f6ab2f10c9580d68929df890f99eb'
 app.config['SESSION_TYPE'] = 'filesystem'
 # Initialize the session
 Session(app)
 # Configure SQLAlchemy to connect with your RDS MySQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root_password/mydatabase'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://user:password@db/pradeep'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configure Flask-Mail to send emails
