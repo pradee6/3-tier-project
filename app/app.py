@@ -31,7 +31,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 # Initialize the session
 Session(app)
 # Configure SQLAlchemy to connect with your RDS MySQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root_password@db:3306/mydatabase'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root_password/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configure Flask-Mail to send emails
