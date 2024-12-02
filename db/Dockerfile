@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mysql:latest
 
 # Set environment variables for MySQL
 ENV MYSQL_ROOT_PASSWORD=root_password
