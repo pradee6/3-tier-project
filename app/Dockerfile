@@ -1,29 +1,33 @@
-# Use the official Amazon Linux 2 image as the base image
-FROM amazonlinux:2
+# Use Python base image
+FROM python:3.9-slim
 
-# Install necessary dependencies
-RUN yum update -y && \
-    yum install -y python3 python3-pip wget dnf && \
-    # Install MySQL 5.7 from Amazon Linux 2 repository
-    yum install -y mysql mysql-server && \
-    # Clean up cache to reduce image size
-    yum clean all
+# Install MySQL server and client
+RUN apt-get update && \
+    apt-get install -y mysql-server mysql-client libmysqlclient-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
+# Install required Python dependencies (Flask, SQLAlchemy, MySQL connector)
+RUN pip install --no-cache-dir flask flask-mysqldb mysql-connector-python flask-sqlalchemy
 
-# Copy the contents of the app folder into the /app directory in the container
-COPY ./app /app
-
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Expose the port that the Flask app will run on
+# Copy the Flask application files to the container
+COPY . /app
+
+# Expose the port that the app will run on
 EXPOSE 5000
 
-# Start MySQL server and Flask app in the same container
-CMD service mysqld start && \
-    mysql -e "CREATE DATABASE IF NOT EXISTS tcs;" && \
-    mysql -e "GRANT ALL PRIVILEGES ON tcs.* TO 'root'@'%' IDENTIFIED BY 'rootpassword';" && \
+# Set the environment variables for MySQL user and password
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_USER=flaskuser
+ENV MYSQL_PASSWORD=flaskpassword
+ENV MYSQL_DATABASE=tcs
+
+# Initialize MySQL database and start the Flask app
+CMD service mysql start && \
+    mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" && \
+    mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" && \
+    mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" && \
     mysql -e "FLUSH PRIVILEGES;" && \
-    python3 app.py
+    python3 /app/app.py
