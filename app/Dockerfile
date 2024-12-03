@@ -1,37 +1,32 @@
-# Use the official Python image from Docker Hub
-FROM python:3.9-slim
+# Use Amazon Linux 2 as the base image
+FROM amazonlinux:2
 
-# Set the working directory inside the container
+# Install system dependencies and Python 3
+RUN yum update -y && \
+    yum install -y python3 python3-pip && \
+    yum clean all
+
+# Upgrade pip to the latest version
+RUN pip3 install --upgrade pip
+
+# Set the working directory for the application
 WORKDIR /app
 
-# Copy only the requirements.txt first to leverage Docker cache
+# Copy the application dependencies file (requirements.txt)
 COPY app/requirements.txt /app/
 
-# Install dependencies
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Install Python dependencies from requirements.txt
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
-# Now, copy the rest of the application files into the container
+# Copy the rest of the application files into the container
 COPY app/ /app/
 
-# Expose port 5000 for the Flask app
+# Expose the Flask application port
 EXPOSE 5000
 
 # Define environment variables for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
-# MySQL configuration
-# MySQL container name
-ENV MYSQL_HOST=db-container
-
-# MySQL username
-ENV MYSQL_USER=user
-
-# MySQL password
-ENV MYSQL_PASSWORD=password
-
-# MySQL database name
-ENV MYSQL_DATABASE=pradeep
-
-# Run the Flask application using python directly
-CMD ["python", "app.py"]
+# Start the Flask application
+CMD ["python3", "app.py"]
