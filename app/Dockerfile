@@ -22,7 +22,7 @@ ENV FLASK_ENV=production
 
 # MySQL configuration
 # MySQL container name
-ENV MYSQL_HOST=db
+ENV MYSQL_HOST=db-container
 
 # MySQL username
 ENV MYSQL_USER=user
