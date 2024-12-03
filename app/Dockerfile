@@ -5,18 +5,19 @@ FROM amazonlinux:2023
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-# Install Python, pip, and other dependencies
+# Install dependencies for MySQL and Python
 RUN yum update -y && \
-    yum install -y python3 python3-pip wget dnf
+    yum install -y python3 python3-pip wget dnf && \
+    yum install -y mysql80-community-release-el9-1.noarch.rpm && \
+    yum install -y mysql-community-client mysql-community-server && \
+    pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
 
-# Install MySQL client (if your Flask app needs to connect to MySQL)
-RUN yum install -y mysql-community-client
+# Set environment variables for MySQL (ensure to configure these based on your app's needs)
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_DATABASE=app_db
 
-# Install Python packages required for the Flask app
-RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
+# Expose the ports MySQL and Flask will run on
+EXPOSE 3306 5000
 
-# Expose the Flask application port (5000 for Flask)
-EXPOSE 5000
-
-# Start the Flask application
-CMD ["python3", "app.py"]  # Assuming your main Flask app file is named app.py
+# Start MySQL and Flask application
+CMD /usr/bin/mysqld_safe & python3 app.py
