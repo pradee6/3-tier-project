@@ -19,8 +19,10 @@ EXPOSE 5000
 # Define environment variables for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
-ENV MYSQL_HOST=db        # This is the MySQL container name
-ENV MYSQL_USER=user      # MySQL username
+
+# MySQL configuration
+ENV MYSQL_HOST=db         # MySQL container name
+ENV MYSQL_USER=user       # MySQL username
 ENV MYSQL_PASSWORD=password  # MySQL password
 ENV MYSQL_DATABASE=pradeep   # MySQL database name
 
