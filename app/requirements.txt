@@ -1,6 +1,6 @@
 Flask==2.3.2
 Flask-SQLAlchemy==3.0.2
 Flask-Mail==0.9.1
-Flask-CORS==3.1.1
+Flask-CORS      # Let pip choose the latest version
 Flask-Session==0.4.0
 mysql-connector-python==8.0.33
