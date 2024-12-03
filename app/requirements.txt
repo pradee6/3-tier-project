@@ -1,7 +1,0 @@
-Flask
-Flask-SQLAlchemy
-Flask-Mail
-Flask-CORS
-Flask-Session
-mysql-connector-python
-SQLAlchemy
