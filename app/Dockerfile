@@ -9,20 +9,14 @@ ENV LC_ALL C.UTF-8
 RUN yum update -y && \
     yum install -y python3 python3-pip wget dnf
 
-# Install MySQL 8.0 community release and client
-RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm && \
-    rpm -ivh mysql80-community-release-el9-1.noarch.rpm && \
-    yum install -y --nogpgcheck mysql-community-client mysql-community-server
+# Install MySQL client (if your Flask app needs to connect to MySQL)
+RUN yum install -y mysql-community-client
 
 # Install Python packages required for the Flask app
 RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
 
-# Expose the port MySQL will run on
-EXPOSE 3306
-
-# Expose the Flask application port (e.g., 5000 for Flask)
+# Expose the Flask application port (5000 for Flask)
 EXPOSE 5000
 
-# Start MySQL and the Flask application
-CMD mysqld_safe & \
-    python3 app.py  # Assuming your main Flask app file is named app.py
+# Start the Flask application
+CMD ["python3", "app.py"]  # Assuming your main Flask app file is named app.py
