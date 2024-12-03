@@ -1,9 +1,9 @@
 # Use Amazon Linux 2 as the base image
 FROM amazonlinux:2
 
-# Install system dependencies and Python 3
+# Install system dependencies, Python 3, and MySQL
 RUN yum update -y && \
-    yum install -y python3 python3-pip && \
+    yum install -y python3 python3-pip mysql-server && \
     yum clean all
 
 # Upgrade pip to the latest version
@@ -21,12 +21,20 @@ RUN pip3 install --no-cache-dir -r /app/requirements.txt
 # Copy the rest of the application files into the container
 COPY app/ /app/
 
-# Expose the Flask application port
-EXPOSE 5000
+# Expose ports for Flask and MySQL
+EXPOSE 5000 3306
 
-# Define environment variables for Flask
+# Define environment variables for Flask and MySQL
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_DATABASE=pradeep
+ENV MYSQL_USER=user
+ENV MYSQL_PASSWORD=password
 
-# Start the Flask application
-CMD ["python3", "app.py"]
+# Add a script to initialize MySQL and Flask
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Start MySQL and Flask
+CMD ["/start.sh"]
