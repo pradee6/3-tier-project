@@ -1,16 +1,13 @@
-# Use the official Amazon Linux 2023 image as the base image
-FROM amazonlinux:2023
+# Use the official Amazon Linux 2 image as the base image
+FROM amazonlinux:2
 
 # Install necessary dependencies
 RUN yum update -y && \
     yum install -y python3 python3-pip wget dnf && \
-    # Install the MySQL 8.0 repository
-    wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm && \
-    yum localinstall -y mysql80-community-release-el9-1.noarch.rpm && \
-    # Install MySQL client and server
-    yum install -y mysql-community-client mysql-community-server && \
-    # Clean up the rpm file
-    rm -f mysql80-community-release-el9-1.noarch.rpm
+    # Install MySQL 5.7 from Amazon Linux 2 repository
+    yum install -y mysql mysql-server && \
+    # Clean up cache to reduce image size
+    yum clean all
 
 # Install Python dependencies
 RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
