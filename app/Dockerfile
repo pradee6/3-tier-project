@@ -21,10 +21,17 @@ ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
 # MySQL configuration
-ENV MYSQL_HOST=db         # MySQL container name
-ENV MYSQL_USER=user       # MySQL username
-ENV MYSQL_PASSWORD=password  # MySQL password
-ENV MYSQL_DATABASE=pradeep   # MySQL database name
+# MySQL container name
+ENV MYSQL_HOST=db
+
+# MySQL username
+ENV MYSQL_USER=user
+
+# MySQL password
+ENV MYSQL_PASSWORD=password
+
+# MySQL database name
+ENV MYSQL_DATABASE=pradeep
 
 # Run the Flask application using python directly
 CMD ["python", "app.py"]
