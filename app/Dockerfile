@@ -1,23 +1,30 @@
-# Use Amazon Linux 2023 as the base image
+# Use the Amazon Linux 2023 base image
 FROM amazonlinux:2023
 
-# Set environment variables to reduce warnings and make installations smoother
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-
-# Install dependencies for MySQL and Python
+# Update the system and install necessary tools
 RUN yum update -y && \
-    yum install -y python3 python3-pip wget dnf && \
-    yum install -y mysql80-community-release-el9-1.noarch.rpm && \
-    yum install -y mysql-community-client mysql-community-server && \
-    pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
+    yum install -y wget dnf python3 python3-pip
 
-# Set environment variables for MySQL (ensure to configure these based on your app's needs)
-ENV MYSQL_ROOT_PASSWORD=rootpassword
-ENV MYSQL_DATABASE=app_db
+# Install MySQL 8.0 Community Edition
+RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm && \
+    dnf install -y mysql80-community-release-el9-1.noarch.rpm && \
+    rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023 && \
+    dnf install -y mysql-community-client mysql-community-server
 
-# Expose the ports MySQL and Flask will run on
-EXPOSE 3306 5000
+# Start MySQL service (in Docker, this won't run as a background service, so we won't actually need it running)
+RUN systemctl enable mysqld
 
-# Start MySQL and Flask application
-CMD /usr/bin/mysqld_safe & python3 app.py
+# Install Python dependencies
+RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python SQLAlchemy
+
+# Set the working directory for the application
+WORKDIR /app
+
+# Copy the Flask app code into the container
+COPY . /app
+
+# Expose the port Flask will run on
+EXPOSE 5000
+
+# Command to start your Flask app
+CMD ["python3", "app.py"]
