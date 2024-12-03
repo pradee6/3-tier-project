@@ -17,9 +17,6 @@ RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm &&
 # Install Python packages required for the Flask app
 RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
 
-# Start MySQL service and enable it
-RUN systemctl enable mysqld
-
 # Expose the port MySQL will run on
 EXPOSE 3306
 
@@ -27,5 +24,5 @@ EXPOSE 3306
 EXPOSE 5000
 
 # Start MySQL and the Flask application
-CMD service mysqld start && \
+CMD mysqld_safe & \
     python3 app.py  # Assuming your main Flask app file is named app.py
