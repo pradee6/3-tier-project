@@ -12,7 +12,7 @@ RUN yum update -y && \
 # Install MySQL 8.0 community release and client
 RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm && \
     rpm -ivh mysql80-community-release-el9-1.noarch.rpm && \
-    yum install -y mysql-community-client mysql-community-server
+    yum install -y --nogpgcheck mysql-community-client mysql-community-server
 
 # Install Python packages required for the Flask app
 RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
