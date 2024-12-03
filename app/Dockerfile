@@ -21,5 +21,9 @@ WORKDIR /app
 # Expose the port that the Flask app will run on
 EXPOSE 5000
 
-# Command to run the Flask application
-CMD ["python3", "app.py"]
+# Start MySQL server and Flask app in the same container
+CMD service mysqld start && \
+    mysql -e "CREATE DATABASE IF NOT EXISTS tcs;" && \
+    mysql -e "GRANT ALL PRIVILEGES ON tcs.* TO 'root'@'%' IDENTIFIED BY 'rootpassword';" && \
+    mysql -e "FLUSH PRIVILEGES;" && \
+    python3 app.py
