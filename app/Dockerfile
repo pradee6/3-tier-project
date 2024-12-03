@@ -21,9 +21,18 @@ RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm &&
 RUN dnf install -y mysql-community-server && \
     systemctl enable mysqld
 
+# Copy your Flask application code into the container
+COPY . /app
+
+# Set the working directory inside the container
+WORKDIR /app
+
 # Expose the port MySQL will run on
 EXPOSE 3306
 
+# Expose the Flask application port (e.g., 5000 for Flask)
+EXPOSE 5000
+
 # Start MySQL and the Flask application
 CMD service mysqld start && \
-    python3 /path/to/your/app.py  # Make sure to update this path with your app's location inside the container
+    python3 app.py  # Assuming your main Flask app file is named app.py
