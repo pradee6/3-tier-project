@@ -1,40 +1,29 @@
-# Use Amazon Linux 2 as the base image
-FROM amazonlinux:2
+# Use Amazon Linux 2023 as the base image
+FROM amazonlinux:2023
 
-# Install system dependencies, Python 3, and MySQL
+# Set environment variables to reduce warnings and make installations smoother
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+# Install Python, pip, and other dependencies
 RUN yum update -y && \
-    yum install -y python3 python3-pip mysql-server && \
-    yum clean all
+    yum install -y python3 python3-pip wget dnf mysql-community-client mysql-community-server
 
-# Upgrade pip to the latest version
-RUN pip3 install --upgrade pip
+# Install Python packages required for the Flask app
+RUN pip3 install Flask Flask-SQLAlchemy Flask-Mail Flask-CORS Flask-Session mysql-connector-python
 
-# Set the working directory for the application
-WORKDIR /app
+# Install MySQL community release and client
+RUN wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm && \
+    rpm -ivh mysql80-community-release-el9-1.noarch.rpm && \
+    dnf install -y mysql80-community-release-el9-1.noarch.rpm
 
-# Copy the application dependencies file (requirements.txt)
-COPY app/requirements.txt /app/
+# Install MySQL server and start it
+RUN dnf install -y mysql-community-server && \
+    systemctl enable mysqld
 
-# Install Python dependencies from requirements.txt
-RUN pip3 install --no-cache-dir -r /app/requirements.txt
+# Expose the port MySQL will run on
+EXPOSE 3306
 
-# Copy the rest of the application files into the container
-COPY app/ /app/
-
-# Expose ports for Flask and MySQL
-EXPOSE 5000 3306
-
-# Define environment variables for Flask and MySQL
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
-ENV MYSQL_ROOT_PASSWORD=rootpassword
-ENV MYSQL_DATABASE=pradeep
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=password
-
-# Add a script to initialize MySQL and Flask
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Start MySQL and Flask
-CMD ["/start.sh"]
+# Start MySQL and the Flask application
+CMD service mysqld start && \
+    python3 /path/to/your/app.py  # Make sure to update this path with your app's location inside the container
