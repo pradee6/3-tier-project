@@ -41,7 +41,7 @@ document.getElementById("loginForm")?.addEventListener("submit", function (e) {
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
 
-    fetch('http://localhost:5000/login', {
+    fetch('http://15.168.13.210:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',  // Include cookies in the request
@@ -88,7 +88,7 @@ document.getElementById("sendOtp")?.addEventListener("click", function () {
 
     console.log("Sending phone number:", phoneNumber);  // Debugging
 
-    fetch('http://localhost:5000/send-otp', {
+    fetch('http://15.168.13.210:5000/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phoneNumber })
@@ -125,7 +125,7 @@ document.getElementById("resetForm")?.addEventListener("submit", function (e) {
         enteredPhone = '+91' + enteredPhone;
     }
 
-    fetch('http://localhost:5000/reset-password', {
+    fetch('http://15.168.13.210:5000/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: enteredPhone, otp, newPassword, confirmPassword })
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userId = localStorage.getItem('userId');
 
     // Fetch user profile data directly
-    fetch(`http://localhost:5000/get-profile/${userId}`, { // Use userId in the URL
+    fetch(`http://15.168.13.210:5000/get-profile/${userId}`, { // Use userId in the URL
         method: 'GET',
         credentials: 'include', // Include session data if necessary
     })
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const feedbackData = { name, email, message };
 
-    fetch('http://localhost:5000/submit-feedback', {
+    fetch('http://15.168.13.210:5000/submit-feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
