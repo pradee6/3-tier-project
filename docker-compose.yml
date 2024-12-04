@@ -1,44 +1,46 @@
-version: '3.8'
+version: '3.7'
 
 services:
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: my-secret-pw
-      MYSQL_DATABASE: pradeep
-      MYSQL_USER: root
-      MYSQL_PASSWORD: my-secret-pw
-    volumes:
-      - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
-
-  flask:
-    build:
-      context: ./app  # Use the app folder as the context for building the Flask app
-    container_name: flask
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_USER: root
-      MYSQL_PASSWORD: my-secret-pw
-      MYSQL_DATABASE: pradeep
-    depends_on:
-      - mysql
-    ports:
-      - "5000:5000"
-    restart: always
-
   web:
     build:
-      context: ./web  # Use the web folder as the context for building the web service
-    container_name: web
-    depends_on:
-      - flask
+      context: .
+      dockerfile: web/Dockerfile  # Dockerfile path for the web service
     ports:
-      - "8002:80"
-    restart: always
+      - "80:80"  # Exposes port 80 of the container to port 80 on the host
+    volumes:
+      - ./web:/usr/local/apache2/htdocs/  # Mounts the web directory to the Apache document root
+    networks:
+      - app-network  # Attach to a common network
+
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile  # Dockerfile path for the app service
+    ports:
+      - "5000:5000"  # Exposes port 5000 of the container to port 5000 on the host
+    depends_on:
+      - web  # Ensure web service is started before app service
+      - mysql  # Ensure MySQL service is started before app service
+    networks:
+      - app-network  # Attach to the same network
+
+  mysql:
+    image: mysql:latest  # Use the latest MySQL image
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set the root password for MySQL
+      MYSQL_DATABASE: tcs  # Name of the database to be created
+      MYSQL_USER: user  # Create a new MySQL user
+      MYSQL_PASSWORD: userpassword  # Set the user's password
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persist MySQL data in a Docker volume
+    ports:
+      - "3306:3306"  # Exposes MySQL's default port to the host
+    networks:
+      - app-network  # Attach to the same network
+
+networks:
+  app-network:
+    driver: bridge  # Creates a bridge network for inter-container communication
 
 volumes:
-  mysql_data:  # Volume for persisting MySQL data
+  mysql-data:  # Declare a volume to persist MySQL data
