@@ -4,43 +4,42 @@ services:
   web:
     build:
       context: .
-      dockerfile: web/Dockerfile  # Dockerfile path for the web service
+      dockerfile: web/Dockerfile
     ports:
-      - "80:80"  # Exposes port 80 of the container to port 80 on the host
+      - "80:80"
     volumes:
-      - ./web:/usr/local/apache2/htdocs/  # Mounts the web directory to the Apache document root
+      - ./web:/usr/local/apache2/htdocs/
     networks:
-      - app-network  # Attach to a common network
+      - app-network
 
   app:
     build:
-      context: .
-      dockerfile: app/Dockerfile  # Dockerfile path for the app service
+      context: ./app  # Ensure context points to the app folder
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"  # Exposes port 5000 of the container to port 5000 on the host
+      - "5000:5000"
     depends_on:
-      - web  # Ensure web service is started before app service
-      - mysql  # Ensure MySQL service is started before app service
+      - web
     networks:
-      - app-network  # Attach to the same network
+      - app-network
 
   mysql:
-    image: mysql:latest  # Use the latest MySQL image
+    image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  # Set the root password for MySQL
-      MYSQL_DATABASE: tcs  # Name of the database to be created
-      MYSQL_USER: user  # Create a new MySQL user
-      MYSQL_PASSWORD: userpassword  # Set the user's password
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tcs
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
     volumes:
-      - mysql-data:/var/lib/mysql  # Persist MySQL data in a Docker volume
+      - mysql-data:/var/lib/mysql
     ports:
-      - "3306:3306"  # Exposes MySQL's default port to the host
+      - "3306:3306"
     networks:
-      - app-network  # Attach to the same network
+      - app-network
 
 networks:
   app-network:
-    driver: bridge  # Creates a bridge network for inter-container communication
+    driver: bridge
 
 volumes:
-  mysql-data:  # Declare a volume to persist MySQL data
+  mysql-data:
