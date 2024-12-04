@@ -36,7 +36,7 @@ def get_db_connection():
     return pymysql.connect(
         host=os.getenv('MYSQL_HOST', 'mysql'),
         user=os.getenv('MYSQL_USER', 'root'),
-        password=os.getenv('MYSQL_PASSWORD', ''),
+        password=os.getenv('MYSQL_PASSWORD', 'userpassword'),
         database=os.getenv('MYSQL_DATABASE', 'tcs')
     )
 
