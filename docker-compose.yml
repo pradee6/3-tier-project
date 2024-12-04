@@ -4,24 +4,21 @@ services:
   mysql:
     image: mysql:latest
     container_name: mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_DATABASE: pradeep
       MYSQL_USER: root
       MYSQL_PASSWORD: my-secret-pw
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
 
   flask:
     build:
-      context: ./flask-app
+      context: ./app  # Use the app folder as the context for building the Flask app
     container_name: flask
-    restart: always
-    ports:
-      - "5000:5000"
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: root
@@ -29,16 +26,19 @@ services:
       MYSQL_DATABASE: pradeep
     depends_on:
       - mysql
+    ports:
+      - "5000:5000"
+    restart: always
 
   web:
     build:
-      context: ./web
+      context: ./web  # Use the web folder as the context for building the web service
     container_name: web
-    restart: always
-    ports:
-      - "8007:80"
     depends_on:
       - flask
+    ports:
+      - "8002:80"
+    restart: always
 
 volumes:
-  mysql_data:
+  mysql_data:  # Volume for persisting MySQL data
