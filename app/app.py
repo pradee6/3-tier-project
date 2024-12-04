@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_mail import Mail, Message
 from flask_cors import CORS  # Import CORS
+from flask_session import Session 
 import random
 import logging
 from datetime import datetime
