@@ -34,7 +34,7 @@ logging.basicConfig(
 # Database connection function
 def get_db_connection():
     return pymysql.connect(
-        host=os.getenv('MYSQL_HOST', 'localhost'),
+        host=os.getenv('MYSQL_HOST', 'mysql'),
         user=os.getenv('MYSQL_USER', 'root'),
         password=os.getenv('MYSQL_PASSWORD', ''),
         database=os.getenv('MYSQL_DATABASE', 'tcs')
