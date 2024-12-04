@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_mail import Mail, Message
 from flask_cors import CORS  # Import CORS
 import random
@@ -15,6 +15,11 @@ app = Flask(__name__)
 
 # Configure CORS to support credentials
 CORS(app, supports_credentials=True)
+# Other configurations and route definitions here
+app.secret_key = '441f6ab2f10c9580d68929df890f99eb'
+app.config['SESSION_TYPE'] = 'filesystem'
+# Initialize the session
+Session(app)
 
 # Configure Flask-Mail to send emails
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
