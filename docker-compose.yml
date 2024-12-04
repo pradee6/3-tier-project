@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: pradeep
+      MYSQL_USER: root
+      MYSQL_PASSWORD: my-secret-pw
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  flask:
+    build:
+      context: ./flask-app
+    container_name: flask
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: pradeep
+    depends_on:
+      - mysql
+
+  web:
+    build:
+      context: ./web
+    container_name: web
+    restart: always
+    ports:
+      - "8007:80"
+    depends_on:
+      - flask
+
+volumes:
+  mysql_data:
