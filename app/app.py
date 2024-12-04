@@ -16,12 +16,6 @@ app = Flask(__name__)
 # Configure CORS to support credentials
 CORS(app)
 
-# Other configurations
-app.secret_key = '441f6ab2f10c9580d68929df890f99eb'
-app.config['SESSION_TYPE'] = 'filesystem'
-# Initialize the session
-Session(app)
-
 # Configure Flask-Mail to send emails
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
