@@ -14,7 +14,7 @@ import os
 app = Flask(__name__)
 
 # Configure CORS to support credentials
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # Configure Flask-Mail to send emails
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
