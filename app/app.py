@@ -16,6 +16,14 @@ app = Flask(__name__)
 
 # Configure CORS to support credentials
 CORS(app, supports_credentials=True)
+# Configure session cookie settings
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin requests
+app.config['SESSION_COOKIE_SECURE'] = True  # Use True if your app is served over HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
+app.config['SESSION_PERMANENT'] = False  # Set to False to allow sessions to be temporary
+app.config['SESSION_COOKIE_DOMAIN'] = ''  # Web server IP
+app.config['SESSION_COOKIE_NAME'] = 'my_flask_session'
+
 # Other configurations and route definitions here
 app.secret_key = '441f6ab2f10c9580d68929df890f99eb'
 app.config['SESSION_TYPE'] = 'filesystem'
