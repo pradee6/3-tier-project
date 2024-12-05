@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: web/Dockerfile
+    image: pradeepdocker125/3-tier-project/web:latest  # Correct image tag for web
     ports:
       - "80:80"
     volumes:
@@ -16,6 +17,7 @@ services:
     build:
       context: ./app  # Ensure context points to the app folder
       dockerfile: Dockerfile
+    image: pradeepdocker125/3-tier-project/app:latest  # Correct image tag for app
     ports:
       - "5000:5000"
     depends_on:
@@ -24,7 +26,10 @@ services:
       - app-network
 
   mysql:
-    image: mysql:latest
+    build:
+      context: ./db  # Path to the custom Dockerfile for MySQL
+      dockerfile: Dockerfile  # Your custom Dockerfile name
+    image: pradeepdocker125/3-tier-project/mysql:latest  # Correct image tag for mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: tcs
@@ -42,4 +47,4 @@ networks:
     driver: bridge
 
 volumes:
-  mysql-data:
+  mysql-data:
