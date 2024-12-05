@@ -3,9 +3,9 @@ version: '3.7'
 services:
   web:
     build:
-      context: .  # Your build context
-      dockerfile: web/Dockerfile  # Path to the Dockerfile for web service
-    image: pradeepdocker125/3-tier-project/web:latest  # Tag the image with your Docker Hub username
+      context: .
+      dockerfile: web/Dockerfile
+    image: pradeepdocker125/3-tier-project/web:latest  # Use the same tag for web
     ports:
       - "80:80"
     volumes:
@@ -16,8 +16,8 @@ services:
   app:
     build:
       context: ./app  # Ensure context points to the app folder
-      dockerfile: Dockerfile  # Path to Dockerfile for app service
-    image: pradeepdocker125/3-tier-project/app:latest  # Tag the image with your Docker Hub username
+      dockerfile: Dockerfile
+    image: pradeepdocker125/3-tier-project/app:latest  # Use the same tag for app
     ports:
       - "5000:5000"
     depends_on:
@@ -26,7 +26,7 @@ services:
       - app-network
 
   mysql:
-    image: pradeepdocker125/3-tier-project/mysql:latest  # Use your Docker Hub username for mysql
+    image: pradeepdocker125/3-tier-project/mysql:latest  # Use the same tag for mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: tcs
