@@ -18,7 +18,7 @@ document.getElementById("signupForm")?.addEventListener("submit", function (e) {
         phone = '+91' + phone;
     }
 
-    fetch('/signup)', {
+    fetch('/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, phone, gender, dob })
